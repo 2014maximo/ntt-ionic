@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-login-page',
@@ -6,9 +9,55 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent  implements OnInit {
+  password: string = '';
+  showPassword: boolean = false;
+  paises: any[]=[];
 
-  constructor() { }
+  ingreso = new FormGroup({
+    usuario: new FormControl(''),
+    clave: new FormControl(''),
+  });
 
-  ngOnInit() {}
+  constructor(private authService: AuthService, private utilService: UtilsService) { }
+
+  ngOnInit() {
+    this.utilService.listaPaises().subscribe( resp => {
+      this.paises = resp.sort(function (x:any, y:any) {
+        if (x.name.common < y.name.common) {
+            return -1;
+        }
+        if (x.name.common > y.name.common) {
+            return 1;
+        }
+        return 0;
+      });
+    });
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  submitForm(form: FormGroup) {
+    console.log(form);
+    if (form.valid) {
+      this.authService.login(form.value.usuario, form.value.clave).subscribe(resp => console.log(resp))
+      
+    } else {
+      console.log('Por favor, complete todos los campos requeridos.');
+    }
+  }
+  compararPorNombre(a:any, b:any) {
+    const nombreA = a.nombre.toUpperCase(); // Convertir a mayúsculas para comparación sin distinción entre mayúsculas y minúsculas
+    const nombreB = b.nombre.toUpperCase();
+  
+    if (nombreA < nombreB) {
+      return -1;
+    }
+    if (nombreA > nombreB) {
+      return 1;
+    }
+    return 0; // Los nombres son iguales
+  }
 
 }

@@ -1,3 +1,50 @@
-<p>
-  login-page works!
-</p>
+<div class="espaciado"></div>
+
+<div class="row">
+  div
+</div>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Login</ion-card-title>
+    <ion-card-subtitle>NTT Data</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form [formGroup]="ingreso" (ngSubmit)="submitForm(ingreso)">
+      <ion-list>
+        <ion-item>
+          <ion-select label="País de origen" placeholder="Seleccione">
+            <ion-select-option *ngFor="let pais of paises" value="{{ pais.name.common }}">{{ pais.name.common }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input label="Usuario:"
+            labelPlacement="stacked"
+            formControlName="usuario"
+            fill="solid" [clearInput]="true"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input label="Clave:"
+            labelPlacement="stacked"
+            fill="solid"
+            [clearInput]="true"
+            formControlName="clave"
+            [type]="showPassword ? 'text' : 'password'"></ion-input>
+          <ion-icon (click)="togglePasswordVisibility()" slot="end" [name]="showPassword ? 'eye' : 'eye-off'"></ion-icon>
+        </ion-item>
+      </ion-list>
+      <ion-buttons slot="primary" class="ion-button-center ion-margin">
+        <ion-button fill="outline" slot="start" type="submit">
+          Ingresar
+        </ion-button>
+      </ion-buttons>
+    </form>
+    <ion-buttons class="ion-margin" slot="end">
+      <ion-button class="ion-text-capitalize">
+        ¿Tienes cuenta?
+      </ion-button>
+    </ion-buttons>
+    
+  </ion-card-content>
+</ion-card>
