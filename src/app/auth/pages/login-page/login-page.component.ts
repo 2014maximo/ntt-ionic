@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UtilsService } from '../../services/utils.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -18,7 +19,9 @@ export class LoginPageComponent  implements OnInit {
     clave: new FormControl(''),
   });
 
-  constructor(private authService: AuthService, private utilService: UtilsService) { }
+  constructor(private authService: AuthService,
+              private utilService: UtilsService,
+              private router: Router) { }
 
   ngOnInit() {
     this.utilService.listaPaises().subscribe( resp => {
@@ -41,7 +44,10 @@ export class LoginPageComponent  implements OnInit {
   submitForm(form: FormGroup) {
     console.log(form);
     if (form.valid) {
-      this.authService.login(form.value.usuario, form.value.clave).subscribe(resp => console.log(resp))
+      this.authService.login(form.value.usuario, form.value.clave).subscribe( resp => {
+        console.log(resp);
+        this.router.navigate(['tasks']);
+      })
       
     } else {
       console.log('Por favor, complete todos los campos requeridos.');
