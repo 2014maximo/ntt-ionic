@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ITask } from '../../interface/task.interface';
+import { IonModal } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core/components';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-tasks',
@@ -8,25 +11,69 @@ import { ITask } from '../../interface/task.interface';
 })
 export class TasksComponent  implements OnInit {
 
-  tareas: ITask[] = [{completed:false, text:'hola'}];
+  @ViewChild(IonModal) modal: IonModal;
+  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
+  name: string = '';
+  componente = TasksComponent;
+
+  tareas: ITask[] = [];
   nuevaTarea: string = '';
 
-  constructor() { }
+  ingreso = new FormGroup({
+    completed: new FormControl(''),
+    text: new FormControl(''),
+  });
 
-  ngOnInit() {}
+  constructor() {
+  }
+
+  ngOnInit() {
+    this.cargarStorage();
+  }
 
   agregarTarea() {
-    if (this.nuevaTarea.trim() !== '') {
-      this.tareas.push({ text: this.nuevaTarea, completed: false });
-      this.nuevaTarea = '';
+    let id = this.tareas.length+1;
+    let tarea = {text:this.ingreso.value.text, completed: false, id: id}
+    this.tareas.push(tarea);
+    localStorage.setItem('data', JSON.stringify(this.tareas) );
+    this.ingreso.reset();
+  }
+
+  borrarTarea(id) {
+    this.tareas.splice(id, 1);
+    localStorage.setItem('data', JSON.stringify(this.tareas));
+  }
+
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    this.modal.dismiss(this.name, 'confirm');
+    this.agregarTarea();
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      this.message = `Hello, ${ev.detail.data}!`;
     }
   }
 
-  borrarTarea(task: any) {
-    const index = this.tareas.indexOf(task);
-    if (index !== -1) {
-      this.tareas.splice(index, 1);
+  submitForm(form: FormGroup) {
+    console.log(form);
+    if (form.valid) {
+      
+    } else {
+      console.log('Por favor, complete todos los campos requeridos.');
     }
   }
+
+  cargarStorage(){
+    if(localStorage.getItem('data')){
+      this.tareas = JSON.parse(localStorage.getItem('data')) as ITask[];
+    }
+  }
+
 
 }

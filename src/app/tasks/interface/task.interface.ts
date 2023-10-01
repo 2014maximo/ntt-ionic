@@ -1,4 +1,5 @@
 export interface ITask {
     completed:boolean;
-    text: string
+    text: string;
+    id:number
 }

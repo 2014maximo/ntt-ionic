@@ -1,3 +1,10 @@
-<p>
-  task works!
-</p>
+<ion-item>
+  <ion-item (click)="marcar()">
+    <ion-checkbox checked="{{tarea.completed }}" fill="start"></ion-checkbox>
+  </ion-item>
+  <ion-item class="ion-justify-content-start">
+    <ion-label *ngIf="!tarea.completed">{{ tarea.text }}</ion-label>
+    <ion-label *ngIf="tarea.completed"><del>{{ tarea.text }}</del></ion-label>
+  </ion-item>
+  <ion-icon name="close-circle-outline" (click)="borrar()"></ion-icon>
+</ion-item>

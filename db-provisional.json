@@ -7,11 +7,11 @@
         "pais": "colombia"
       }
     ],
-    "comments": [
+    "tareas": [
       {
         "id": 1,
-        "body": "some comment",
-        "postId": 1
+        "text": "algo",
+        "selected": false
       }
     ],
     "profile": {
