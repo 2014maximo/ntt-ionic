@@ -11,7 +11,6 @@ import * as CryptoJS from 'crypto-js';
 })
 export class AuthService {
 
-  private baseUrl = environment.baseUrl;
   private apiUrl = environment.apiUrl
   private user?: User;
 
