@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3004/users/'
+  baseUrl: 'https://plantillas_dev.gitlab.io/assets/json/ntt-data.json',
+  apiUrl: 'https://reqres.in/api/login/'
 };
 
 /*

@@ -1,49 +1,32 @@
-<app-header [componente]="componente"></app-header>
+<app-header [componente]="'Tareas'"></app-header>
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-card>
     <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
     <ion-card-header>
       <ion-card-title>TAREAS</ion-card-title>
-      <ion-card-subtitle></ion-card-subtitle>
+      <ion-card-subtitle>{{ usuario }}</ion-card-subtitle>
     </ion-card-header>
   
     <ion-card-content>
       <ion-list *ngIf="tareas">
-        <app-task *ngFor="let tarea of tareas" [tarea]="{completed:tarea.completed, text:tarea.text, id:tarea.id}" (envioId)="borrarTarea($event)"></app-task>
+        <ion-item *ngFor="let tareaActual of tareas">
+          <ion-item (click)="marcar(tareaActual.id)">
+            <ion-checkbox checked="{{ tareaActual.completed }}" fill="start"></ion-checkbox>
+          </ion-item>
+          <ion-item class="ion-justify-content-start" expand="block" (click)="cargarTarea(tareaActual)">
+            <ion-label>{{ tareaActual.title }}</ion-label>
+          </ion-item>
+          <ion-icon name="close-circle-outline" (click)="borrar(tareaActual.id)"></ion-icon>
+        </ion-item>
+
       </ion-list>
     </ion-card-content>
   </ion-card>
   <ion-fab horizontal="start" class="ion-margin">
-    <ion-fab-button id="open-modal" expand="block">
+    <ion-fab-button (click)="agregarNuevaTarea()" expand="block">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="cancel()">Cancelar</ion-button>
-          </ion-buttons>
-          <ion-title>Agregar tarea</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <form [formGroup]="ingreso" (ngSubmit)="submitForm(ingreso)">
-          <ion-item>
-            <ion-label position="stacked">Descripción</ion-label>
-            <ion-input type="text" formControlName="text"
-            fill="solid" [clearInput]="true"></ion-input>
-          </ion-item>
-        </form>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-
 </ion-content>
 
 

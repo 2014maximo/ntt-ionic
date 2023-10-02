@@ -4,7 +4,6 @@ import { TasksRoutingModule } from './tasks-routing.module';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { TaskComponent } from './components/task/task.component';
 import { IonicModule } from '@ionic/angular';
-import { FiltroCompletadoPipe } from './pipe/tasks.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
@@ -15,7 +14,6 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     TasksComponent,
     TaskComponent,
-    FiltroCompletadoPipe
   ],
   imports: [
     CommonModule,
@@ -25,9 +23,6 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
     ReactiveFormsModule,
     TasksRoutingModule
-  ],
-  exports:[
-    FiltroCompletadoPipe
   ]
 })
 export class TaskModule { }

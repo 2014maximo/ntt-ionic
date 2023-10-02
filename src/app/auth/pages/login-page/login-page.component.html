@@ -1,4 +1,3 @@
-<app-header [componente]="'Login'"></app-header>
 <div class="espaciado"></div>
 <div class="row">
   div
@@ -11,7 +10,7 @@
   </ion-card-header>
 
   <ion-card-content>
-    <form [formGroup]="ingreso" (ngSubmit)="submitForm(ingreso)">
+    <form [formGroup]="ingreso" (ngSubmit)="onLogin(ingreso)">
       <ion-list>
         <ion-item>
           <ion-select label="País de origen" placeholder="Seleccione">
@@ -41,10 +40,18 @@
       </ion-buttons>
     </form>
     <ion-buttons class="ion-margin" slot="end">
-      <ion-button class="ion-text-capitalize">
+      <ion-button class="ion-text-capitalize" (click)="paginaRegistrar()">
         ¿Tienes cuenta?
       </ion-button>
     </ion-buttons>
     
   </ion-card-content>
 </ion-card>
+<ion-alert
+  [isOpen]="isAlertOpen"
+  header="Alert"
+  subHeader="Important message"
+  message="{{ noValido }}"
+  [buttons]="alertButtons"
+  (didDismiss)="setOpen(false)"
+></ion-alert>

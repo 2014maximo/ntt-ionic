@@ -12,3 +12,13 @@ ion-fab-button::part(native) {
   ion-fab-button::part(native):active::after {
     background-color: #87d361;
   }
+
+  ion-checkbox {
+    --size: 32px;
+    --checkbox-background-checked: #95b14a;
+  }
+  
+  ion-checkbox::part(container) {
+    border-radius: 6px;
+    border: 2px solid #95b14a;
+  }
